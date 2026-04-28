@@ -78,3 +78,5 @@ sqlite3 ./data/waitlist.db "SELECT event, COUNT(*) FROM events GROUP BY event;"
 
 Set `TURSO_DATABASE_URL` + `TURSO_AUTH_TOKEN` in `.env`. No code changes needed —
 `lib/landing-db.ts` reads them and switches automatically.
+
+feat dashka initial version
