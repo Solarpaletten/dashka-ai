@@ -1,0 +1,423 @@
+/* ─────────────────────────────────────────
+   Dashka — welcome.css  (Workspace entry screen)
+   Class prefix: dw- (Dashka Welcome)
+   Tokens reused from landing.css philosophy.
+   ───────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── Override globals.css body lock ────────────────────────
+   globals.css ships with html,body{overflow:hidden;height:100%}
+   for the swipe app. We toggle .dl-landing-active on <html>/<body>
+   via BodyClassToggle whenever this screen is mounted, so the
+   override is scoped to non-swipe routes. */
+html.dl-landing-active,
+body.dl-landing-active {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: auto !important;
+}
+
+.dashka-welcome {
+  /* tokens */
+  --dw-bg:        #FAF9F7;
+  --dw-bg-card:   #FFFFFF;
+  --dw-ink:       #0E0E0C;
+  --dw-ink-soft:  #4A4845;
+  --dw-ink-mute:  #8C8A85;
+  --dw-line:      #ECEAE5;
+  --dw-line-soft: #F2EFE9;
+  --dw-accent:        #FF7A1A;
+  --dw-accent-deep:   #D85800;
+  --dw-accent-soft:   #FFF1E2;
+  --dw-accent-line:   #FFD9B5;
+  --dw-shadow-sm: 0 1px 2px rgba(20, 14, 0, 0.04);
+  --dw-shadow-md: 0 6px 24px rgba(20, 14, 0, 0.05), 0 1px 2px rgba(20, 14, 0, 0.03);
+  --dw-shadow-lg: 0 24px 60px -16px rgba(20, 14, 0, 0.10), 0 6px 16px rgba(20, 14, 0, 0.04);
+
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  background: var(--dw-bg);
+  color: var(--dw-ink);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'cv11', 'ss01';
+  letter-spacing: -0.005em;
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashka-welcome *,
+.dashka-welcome *::before,
+.dashka-welcome *::after {
+  box-sizing: border-box;
+}
+
+/* ── Layout shell ──────────────────────────────────── */
+.dw-root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* warm halo behind the greeting — same vibe as landing hero */
+.dw-root::before {
+  content: '';
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 760px;
+  height: 380px;
+  max-width: 90vw;
+  background: radial-gradient(ellipse at center, rgba(255, 122, 26, 0.10), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Top bar ───────────────────────────────────────── */
+.dw-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 32px;
+}
+
+.dw-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--dw-ink);
+}
+
+.dw-logo-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dw-accent);
+}
+
+.dw-logo-text {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.dw-top-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dw-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--dw-accent-soft);
+  color: var(--dw-accent-deep);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--dw-accent-line);
+}
+
+/* ── Center stage ──────────────────────────────────── */
+.dw-stage {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 32px 80px;
+  gap: 36px;
+  text-align: center;
+}
+
+/* ── Dashka greets you ─────────────────────────────── */
+.dw-meet {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 560px;
+  text-align: left;
+  /* gentle entrance */
+  animation: dw-rise 0.7s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.dw-meet-avatar {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--dw-accent);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 4px 14px -4px rgba(255, 122, 26, 0.45),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.06);
+  /* subtle breathing — alive without being annoying */
+  animation: dw-breathe 4s ease-in-out infinite;
+}
+
+@keyframes dw-breathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
+}
+
+.dw-meet-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 4px;
+}
+
+.dw-meet-line {
+  margin: 0;
+  font-size: 17.5px;
+  line-height: 1.5;
+  color: var(--dw-ink-soft);
+  letter-spacing: -0.005em;
+}
+
+.dw-meet-line--lead {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--dw-ink);
+  letter-spacing: -0.015em;
+  margin-bottom: 6px;
+}
+
+.dw-meet-line--lead strong {
+  font-weight: 400;
+  font-style: italic;
+  color: var(--dw-accent-deep);
+}
+
+.dw-meet-line--prompt {
+  margin-top: 6px;
+  color: var(--dw-ink);
+  font-weight: 500;
+}
+
+/* ── CTA row ───────────────────────────────────────── */
+.dw-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: dw-rise 0.8s cubic-bezier(.2, .8, .2, 1) 0.08s both;
+}
+
+.dw-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.dw-btn:active { transform: translateY(1px); }
+
+.dw-btn--primary {
+  background: var(--dw-accent);
+  color: #fff;
+  box-shadow: 0 4px 14px -6px rgba(255, 122, 26, 0.55);
+}
+
+.dw-btn--primary:hover {
+  background: var(--dw-accent-deep);
+  transform: translateY(-1px);
+}
+
+.dw-btn--ghost {
+  background: var(--dw-bg-card);
+  color: var(--dw-ink);
+  border-color: var(--dw-line);
+}
+
+.dw-btn--ghost:hover {
+  background: #fff;
+  border-color: #DCD5C8;
+  transform: translateY(-1px);
+}
+
+/* ── Input ─────────────────────────────────────────── */
+.dw-input-wrap {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  animation: dw-rise 0.9s cubic-bezier(.2, .8, .2, 1) 0.16s both;
+}
+
+.dw-input-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 8px 8px 8px;
+  background: var(--dw-bg-card);
+  border: 1px solid var(--dw-line);
+  border-radius: 999px;
+  box-shadow: var(--dw-shadow-md);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.dw-input-row:focus-within {
+  border-color: var(--dw-accent-line);
+  box-shadow:
+    0 0 0 4px var(--dw-accent-soft),
+    var(--dw-shadow-md);
+}
+
+.dw-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 10px 16px;
+  font-size: 15.5px;
+  font-family: inherit;
+  color: var(--dw-ink);
+  min-width: 0;
+}
+
+.dw-input::placeholder { color: var(--dw-ink-mute); }
+
+.dw-send {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--dw-accent);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.12s ease, opacity 0.18s ease;
+  flex-shrink: 0;
+}
+
+.dw-send:hover:not(:disabled) {
+  background: var(--dw-accent-deep);
+  transform: translateY(-1px);
+}
+
+.dw-send:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── Suggestion chips ──────────────────────────────── */
+.dw-suggestions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dw-chip {
+  border: 1px solid var(--dw-line);
+  background: var(--dw-bg-card);
+  color: var(--dw-ink-soft);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+}
+
+.dw-chip:hover {
+  background: var(--dw-accent-soft);
+  color: var(--dw-accent-deep);
+  border-color: var(--dw-accent-line);
+  transform: translateY(-1px);
+}
+
+.dw-chip:active { transform: translateY(0); }
+
+/* ── Footer hint ───────────────────────────────────── */
+.dw-footer {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 20px 32px 28px;
+  font-size: 12px;
+  color: var(--dw-ink-mute);
+}
+
+.dw-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  padding: 2px 6px;
+  margin: 0 1px;
+  border: 1px solid var(--dw-line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: var(--dw-bg-card);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--dw-ink-soft);
+  line-height: 1;
+}
+
+/* ── Animation ─────────────────────────────────────── */
+@keyframes dw-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dw-meet,
+  .dw-cta-row,
+  .dw-input-wrap,
+  .dw-meet-avatar {
+    animation: none;
+  }
+}
+
+/* ── Responsive ────────────────────────────────────── */
+@media (max-width: 720px) {
+  .dw-top         { padding: 16px 20px; }
+  .dw-stage       { padding: 24px 20px 60px; gap: 28px; }
+  .dw-meet        { gap: 12px; max-width: 100%; }
+  .dw-meet-avatar { width: 38px; height: 38px; }
+  .dw-meet-line   { font-size: 15.5px; }
+  .dw-meet-line--lead { font-size: 26px; }
+  .dw-cta-row     { width: 100%; }
+  .dw-btn         { flex: 1 1 200px; justify-content: center; }
+  .dw-suggestions { gap: 6px; }
+  .dw-chip        { font-size: 12.5px; padding: 7px 12px; }
+  .dw-input       { font-size: 14.5px; padding: 8px 14px; }
+}
